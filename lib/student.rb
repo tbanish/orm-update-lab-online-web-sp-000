@@ -18,7 +18,7 @@ class Student
         name TEXT,
         grade TEXT
         )
-      SQL
+    SQL
       
     DB[:conn].execute(sql)
   end
@@ -26,14 +26,21 @@ class Student
   def self.drop_table
     sql = <<-SQL
       DROP TABLE students
-      SQL
+    SQL
       
     DB[:conn].execute(sql)
   end
   
   def save
-    sql = <<-SQL
-      
+    if self.id
+      self.update
+    else
+      sql = <<-SQL
+        INSERT INTO students (name, grade)
+        VALUES (?, ?)
+      SQL
+        
+      DB[:conn].execute(sql, name, grade)
     
     
     
